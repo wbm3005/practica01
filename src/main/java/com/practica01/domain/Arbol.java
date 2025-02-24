@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data // generar por debajo los getter y setter
 @Entity
-@Table(name="categoria")
+@Table(name="arbol")
 
 public class Arbol implements Serializable{
     
