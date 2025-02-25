@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <!-- Se reutiliza el fragmento head definiendo el título de la página -->
-  <head th:replace="layout/plantilla :: head('Lista de Árboles')"></head>
-  <body>
-    <!-- Insertar el header -->
-    <div th:replace="layout/plantilla :: header"></div>
-    
-    <div class="container mt-4">
-      <h1 class="mb-4">Lista de Árboles</h1>
-      <a href="/arboles/nuevo" class="btn btn-primary mb-3">Nuevo Árbol</a>
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Especie</th>
-            <th>Edad</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="arbol : ${arboles}">
-            <td th:text="${arbol.id}">1</td>
-            <td th:text="${arbol.nombre}">Nombre</td>
-            <td th:text="${arbol.especie}">Especie</td>
-            <td th:text="${arbol.edad}">Edad</td>
-            <td>
-              <a th:href="@{'/arboles/editar'(id=${arbol.id})}" class="btn btn-warning btn-sm">Editar</a>
-              <a th:href="@{'/arboles/eliminar'(id=${arbol.id})}" class="btn btn-danger btn-sm">Eliminar</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<head th:replace="fragments/header :: head"></head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Lista de Árboles</h1>
+        <a href="/arboles/nuevo" class="btn btn-primary mb-3">Agregar Nuevo Árbol</a>
+        
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Especie</th>
+                    <th>Altura</th>
+                    <th>Edad</th>
+                    <th>Diámetro</th>
+                    <th>Dureza</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="arbol : ${arboles}">
+                    <td th:text="${arbol.idArbol}"></td>
+                    <td th:text="${arbol.nombre}"></td>
+                    <td th:text="${arbol.especie}"></td>
+                    <td th:text="${arbol.altura}"></td>
+                    <td th:text="${arbol.edad}"></td>
+                    <td th:text="${arbol.diametro}"></td>
+                    <td th:text="${arbol.dureza}"></td>
+                    <td>
+                        <a th:href="@{'/arboles/editar/' + ${arbol.idArbol}}" class="btn btn-warning btn-sm">Editar</a>
+                        <a th:href="@{'/arboles/eliminar/' + ${arbol.idArbol}}" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    
-    <!-- Insertar el footer -->
-    <div th:replace="layout/plantilla :: footer"></div>
-  </body>
+    <footer th:replace="fragments/footer :: footer"></footer>
+</body>
 </html>

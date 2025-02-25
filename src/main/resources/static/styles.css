@@ -1,0 +1,39 @@
+/* Estilos Generales */
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos para la Tabla */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Botones */
+.btn {
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Estilo del Navbar */
+.navbar {
+    background-color: #343a40;
+    padding: 15px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

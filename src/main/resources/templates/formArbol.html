@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <!-- Se reutiliza el fragmento head. El título depende de si se está editando o creando un nuevo árbol -->
-  <head th:replace="layout/plantilla :: head(${arbol.id} != null ? 'Editar Árbol' : 'Nuevo Árbol')"></head>
-  <body>
-    <!-- Insertar el header -->
-    <div th:replace="layout/plantilla :: header"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Árbol</title>
+</head>
+<body>
+    <h1>Agregar un Nuevo Árbol</h1>
     
-    <div class="container mt-4">
-      <h1 th:text="${arbol.id} != null ? 'Editar Árbol' : 'Nuevo Árbol'">Nuevo Árbol</h1>
-      <form th:action="@{/arboles/guardar}" th:object="${arbol}" method="post">
-        <!-- Mostrar ID solo en edición -->
-        <div class="mb-3" th:if="${arbol.id} != null">
-           <label for="id" class="form-label">ID</label>
-           <input type="text" id="id" class="form-control" th:field="*{id}" readonly>
-        </div>
-        <div class="mb-3">
-           <label for="nombre" class="form-label">Nombre</label>
-           <input type="text" id="nombre" class="form-control" th:field="*{nombre}" required>
-        </div>
-        <div class="mb-3">
-           <label for="especie" class="form-label">Especie</label>
-           <input type="text" id="especie" class="form-control" th:field="*{especie}" required>
-        </div>
-        <div class="mb-3">
-           <label for="edad" class="form-label">Edad</label>
-           <input type="number" id="edad" class="form-control" th:field="*{edad}" required>
-        </div>
-        <button type="submit" class="btn btn-success">Guardar</button>
-        <a href="/arboles" class="btn btn-secondary">Cancelar</a>
-      </form>
-    </div>
-    
-    <!-- Insertar el footer -->
-    <div th:replace="layout/plantilla :: footer"></div>
-  </body>
+    <form th:action="@{/arboles/guardar}" th:object="${arbol}" method="post">
+        <input type="hidden" th:field="*{idArbol}" />
+
+        <label>Nombre:</label>
+        <input type="text" th:field="*{nombre}" required /><br>
+
+        <label>Especie:</label>
+        <input type="text" th:field="*{especie}" required /><br>
+
+        <label>Altura:</label>
+        <input type="number" th:field="*{altura}" /><br>
+
+        <label>Edad:</label>
+        <input type="number" th:field="*{edad}" /><br>
+
+        <label>Diámetro:</label>
+        <input type="number" th:field="*{diametro}" /><br>
+
+        <label>Dureza:</label>
+        <input type="text" th:field="*{dureza}" /><br>
+
+        <button type="submit">Guardar Árbol</button>
+    </form>
+
+    <br>
+    <a href="/arboles">Volver a la Lista</a>
+</body>
 </html>

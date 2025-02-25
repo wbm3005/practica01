@@ -2,51 +2,54 @@ package com.practica01.controller;
 
 import com.practica01.domain.Arbol;
 import com.practica01.service.ArbolService;
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
+@RequestMapping("/arboles")
+@Slf4j
 public class ArbolController {
     
     @Autowired
     private ArbolService arbolService;
-    
-    @GetMapping("/arboles")
-    public String listArboles(Model model) {
-        model.addAttribute("arboles", arbolService.findAll());
+
+    @GetMapping
+    public String listarArboles(Model model) {
+        List<Arbol> arboles = arbolService.findAll();
+        model.addAttribute("arboles", arboles);
         return "arboles";
     }
-    
-    // Mostrar formulario para crear un nuevo árbol
+
     @GetMapping("/nuevo")
-    public String crearArbol(Model model) {
+    public String mostrarFormularioNuevo(Model model) {
         model.addAttribute("arbol", new Arbol());
-        return "formArbol"; // Vista Thymeleaf para el formulario (formArbol.html)
+        return "formArbol"; 
     }
 
-    // Guardar un árbol (creación o actualización)
     @PostMapping("/guardar")
     public String guardarArbol(@ModelAttribute("arbol") Arbol arbol) {
+        if (arbol.getNombre() == null || arbol.getEspecie() == null) {
+            log.error("Intento de guardar un árbol con valores nulos.");
+            return "redirect:/arboles";
+        }
         arbolService.save(arbol);
         return "redirect:/arboles";
     }
 
-    // Mostrar formulario para editar un árbol existente
+
     @GetMapping("/editar/{id}")
-    public String editarArbol(@PathVariable("id") Long id, Model model) {
-        Arbol arbol = arbolService.findById(id);
-        model.addAttribute("arbol", arbol);
-        return "formArbol"; // Reutiliza la misma vista para crear/editar
+    public String mostrarFormularioEditar(@PathVariable("id") Long id, Model model) {
+        Optional<Arbol> arbol = Optional.ofNullable(arbolService.findById(id));
+        arbol.ifPresent(value -> model.addAttribute("arbol", value));
+        return arbol.isPresent() ? "formArbol" : "redirect:/arboles";
     }
 
-    // Eliminar un árbol
     @GetMapping("/eliminar/{id}")
     public String eliminarArbol(@PathVariable("id") Long id) {
         arbolService.delete(id);
